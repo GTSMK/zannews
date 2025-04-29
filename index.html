@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ZANNEWS - Portal Berita</title>
+  <style>
+    :root {
+      --bg-color: #fff;
+      --text-color: #333;
+      --primary-color: #007BFF;
+    }
+    body.dark-mode {
+      --bg-color: #121212;
+      --text-color: #eee;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Arial', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      transition: background-color 0.5s, color 0.5s;
+    }
+    header, nav, .news-card, footer {
+      transition: background-color 0.5s, color 0.5s, border 0.5s;
+    }
+    header {
+      background: var(--bg-color);
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+    }
+    nav {
+      position: relative;
+    }
+    nav a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: 600;
+      position: relative;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: var(--primary-color);
+    }
+    nav .dropdown {
+      position: absolute;
+      top: 40px;
+      left: 0;
+      background: var(--bg-color);
+      border: 1px solid #ccc;
+      display: none;
+      flex-direction: column;
+      min-width: 120px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      transition: background-color 0.5s, color 0.5s;
+    }
+    nav:hover .dropdown {
+      display: flex;
+    }
+    nav .dropdown a {
+      padding: 10px;
+      margin: 0;
+    }
+    .toggle-darkmode {
+      margin-left: 20px;
+      cursor: pointer;
+      background: var(--primary-color);
+      border: none;
+      padding: 8px 16px;
+      color: #fff;
+      border-radius: 20px;
+      font-size: 14px;
+      transition: background-color 0.3s;
+    }
+    .toggle-darkmode:hover {
+      background: #0056b3;
+    }
+    .hero img {
+      width: 100%;
+      height: 450px;
+      object-fit: cover;
+      animation: fadeIn 2s ease;
+    }
+    .content {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 0 20px;
+      animation: slideIn 1s ease;
+    }
+    .content h1 {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+    .content p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    .more-news {
+      margin-top: 50px;
+    }
+    .more-news h2 {
+      font-size: 26px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--primary-color);
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+    .news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 20px;
+}
+
+.news-grid a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.news-card {
+  background: var(--bg-color);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.news-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.news-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.news-card:hover img {
+  transform: scale(1.03);
+}
+
+.news-content {
+  padding: 16px;
+}
+
+.news-content h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: var(--text-color);
+}
+
+.news-content p {
+  font-size: 15px;
+  color: var(--text-color);
+}
+
+    footer {
+  margin-top: 50px;
+  padding: 30px 20px;
+  text-align: center;
+  background: var(--footer-bg, #f2f2f2);
+  font-size: 14px;
+  color: var(--text-color);
+  transition: background-color 0.5s, color 0.5s;
+}
+
+.footer-links {
+  margin-bottom: 15px;
+}
+
+.footer-links a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover {
+  color: var(--primary-color);
+}
+
+.social-icons {
+  margin-top: 10px;
+}
+
+.social-icons a {
+  margin: 0 8px;
+  font-size: 20px;
+  color: var(--text-color);
+  transition: color 0.3s;
+}
+
+.social-icons a:hover {
+  color: var(--primary-color);
+}
+
+/* Dark mode footer */
+body.dark-mode footer {
+  background: #1c1c1c;
+  color: #eee;
+}
+body.dark-mode .footer-links a,
+body.dark-mode .social-icons a {
+  color: #eee;
+}
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+    @keyframes slideIn {
+      from {transform: translateY(50px); opacity: 0;}
+      to {transform: translateY(0); opacity: 1;}
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body>
+
+<header>
+  <div class="logo">ZANNEWS</div>
+  <nav>
+    <a href="index.html">Home</a>
+      <a href="movie.html">Movie</a>
+      <a href="game.html">Game</a>
+    <button class="toggle-darkmode" onclick="toggleDarkMode()">Dark Mode</button>
+  </nav>
+</header>
+
+<section class="hero">
+  <img src="https://files.catbox.moe/pu5rse.png" alt="Recent Berita">
+</section>
+
+<section class="content">
+  <h1>Dedi Mulyadi Berdebat dengan Remaja Soal Larangan Wisuda dan Penggusuran di Bantaran</h1>
+  <p>viral di media sosial memperlihatkan seorang remaja perempuan dari Kabupaten Bekasi melayangkan kritikan terhadap kebijakan Gubernur Jawa Barat Dedi Mulyadi. Kritikan tersebut berkaitan dengan penghapusan kegiatan wisuda dan penggusuran rumah di bantaran kali yang baru-baru ini digencarkan Dedi Mulyadi. Dedi Mulyadi merespons kritikan tersebut dengan mengundang remaja itu untuk berdiskusi mengenai kebijakannya. Baca juga: Dedi Mulyadi Pastikan Sudah Tak Ada Masalah soal Tunggak Pajak Mobil Lexus Miliknya Remaja perempuan itu menjelaskan alasannya mengkritik kebijakan Gubernur terkait penghapusan wisuda di sekolah. Di sisi lain, remaja itu mengatakan perlu ada kegiatan perpisahan sebagai kenang-kenangan di masa sekolah. Dedi Mulyadi kemudian mempertanyakan keberadaan wisuda di jenjang pendidikan yang lebih rendah.</p>
+  <p>"Di negara mana yang TK ada wisuda, SMP ada wisuda, SMA ada wisuda di negara mana tuh? Hanya di Indonesia," ucap Dedi Mulyadi, dikutip dari kanal Youtube-nya, Kang Dedi Mulyadi Channel, Minggu (27/4/2025). Ia menjelaskan, wisuda seharusnya hanya diperuntukkan bagi mereka yang menyelesaikan pendidikan di perguruan tinggi. Dedi juga menyoroti beban biaya yang ditanggung orang tua. "Wisuda untuk siapa coba? Yang kuliah, di kita anak TK wisuda biaya gak? (Ada) biaya. Punya rumah enggak yang ikut wisuda TK itu? Enggak. Pake bantaran sungai ya, kan?" ucap Dedi lagi.</p>
+  <a href="https://www.haibunda.com/trending/20250428153924-93-365512/viral-remaja-putri-jadi-sorotan-usai-debat-dengan-dedi-mulyadi-soal-larangan-wisuda-sekolah">Klik Untuk Lebih Lengkapnya</a>
+
+  <section class="more-news">
+    <h2>Berita Lainnya</h2>
+    <div class="news-grid">
+      <a href="https://www.cnbcindonesia.com/news/20250416060433-4-626293/geger-rusia-mau-bangun-pangkalan-udara-di-papua-ri" class="news-card">
+        <img src="https://files.catbox.moe/dc0yzd.jpeg" alt="One Piece Live Action">
+        <div class="news-content">
+          <h3>Geger Rusia Mau Bangun Pangkalan Udara di Papua RI</h3>
+          <p> Rusia dilaporkan telah meminta izin kepada Indonesia untuk menempatkan pesawat Angkatan Udara Rusia (VKS) di Biak, Papua. Hal ini disampaikan oleh media pertahanan Janes, Senin (14/4/2025).</p>
+          <p>Klik Untuk Lebih Lengkapnya</p>
+        </div>
+      </a>
+    
+      <a href="https://www.cnnindonesia.com/hiburan/20250427002700-220-1223068/jumbo-resmi-3-besar-film-indonesia-terlaris-dalam-sejarah" class="news-card">
+        <img src="https://files.catbox.moe/afkzr0.jpg" alt="Spider-Man 4">
+        <div class="news-content">
+          <h3>Jumbo Resmi 3 Besar Film Indonesia Terlaris dalam Sejarah</h3>
+          <p>akhirnya menembus angka 7 juta penonton pada Sabtu (26/4) malam, yang sekaligus mendaulat film animasi itu sebagai film Indonesia ke-tiga terlaris dalam sejarah perfilman Indonesia.</p>
+          <p>Klik Untuk Lebih Lengkapnya</p>
+        </div>
+      </a>
+    
+      <a href="https://www.detik.com/jogja/berita/d-7889609/detik-detik-kematian-paus-fransiskus-diungkap-dokter-pendampingnya" class="news-card">
+        <img src="https://files.catbox.moe/ndxnjw.jpeg" alt="Minecraft Movie">
+        <div class="news-content">
+          <h3>Detik-detik Kematian Paus Fransiskus Diungkap Dokter Pendampingnya</h3>
+          <p>Paus Fransiskus meninggal akibat stroke yang tak terduga dan mengejutkan dunia dalam usia 88 tahun. Dokter yang selama ini merawat Sri Paus mengungkapkan detik-detik kematiannya.</p>
+          <p>Klik Untuk Lebih Lengkapnya</p>
+        </div>
+      </a>
+    </div>
+    
+  </section>
+</section>
+
+<footer>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="movie.html">Movie</a>
+      <a href="game.html">Game</a>
+    </div>
+  
+    <div style="margin-top: 15px;">
+      &copy; 2025 ZANNEWS. All rights reserved.
+    </div>
+  </footer>
+  
+  <script>
+    function toggleDarkMode() {
+      const body = document.body;
+      const toggleBtn = document.querySelector('.toggle-darkmode');
+  
+      body.classList.toggle('dark-mode');
+  
+      // Ganti teks tombol berdasarkan mode
+      if (body.classList.contains('dark-mode')) {
+        toggleBtn.textContent = 'Light Mode';
+      } else {
+        toggleBtn.textContent = 'Dark Mode';
+      }
+    }
+  </script>
+  
+</body>
+</html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Game - KINNEWS</title>
+  <style>
+    :root {
+      --bg-color: #fff;
+      --text-color: #333;
+      --primary-color: #007BFF;
+    }
+    body.dark-mode {
+      --bg-color: #121212;
+      --text-color: #eee;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Arial', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      transition: background-color 0.5s, color 0.5s;
+    }
+    header, nav, .news-card, footer {
+      transition: background-color 0.5s, color 0.5s, border 0.5s;
+    }
+    header {
+      background: var(--bg-color);
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .logo {
+      font-size: 28px;
+      font-weight: bold;
+    }
+    nav {
+      position: relative;
+    }
+    nav a {
+      margin-left: 20px;
+      text-decoration: none;
+      color: var(--text-color);
+      font-weight: 600;
+      position: relative;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: var(--primary-color);
+    }
+    nav .dropdown {
+      position: absolute;
+      top: 40px;
+      left: 0;
+      background: var(--bg-color);
+      border: 1px solid #ccc;
+      display: none;
+      flex-direction: column;
+      min-width: 120px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      transition: background-color 0.5s, color 0.5s;
+    }
+    nav:hover .dropdown {
+      display: flex;
+    }
+    nav .dropdown a {
+      padding: 10px;
+      margin: 0;
+    }
+    .toggle-darkmode {
+      margin-left: 20px;
+      cursor: pointer;
+      background: var(--primary-color);
+      border: none;
+      padding: 8px 16px;
+      color: #fff;
+      border-radius: 20px;
+      font-size: 14px;
+      transition: background-color 0.3s;
+    }
+    .toggle-darkmode:hover {
+      background: #0056b3;
+    }
+    .hero img {
+      width: 100%;
+      height: 450px;
+      object-fit: cover;
+      animation: fadeIn 2s ease;
+    }
+    .content {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 0 20px;
+      animation: slideIn 1s ease;
+    }
+    .content h1 {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+    .content p {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+    .more-news {
+      margin-top: 50px;
+    }
+    .more-news h2 {
+      font-size: 26px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid var(--primary-color);
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+    .news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 20px;
+}
+
+.news-grid a {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.news-card {
+  background: var(--bg-color);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+.news-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.news-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.news-card:hover img {
+  transform: scale(1.03);
+}
+
+.news-content {
+  padding: 16px;
+}
+
+.news-content h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: var(--text-color);
+}
+
+.news-content p {
+  font-size: 15px;
+  color: var(--text-color);
+}
+
+    footer {
+  margin-top: 50px;
+  padding: 30px 20px;
+  text-align: center;
+  background: var(--footer-bg, #f2f2f2);
+  font-size: 14px;
+  color: var(--text-color);
+  transition: background-color 0.5s, color 0.5s;
+}
+
+.footer-links {
+  margin-bottom: 15px;
+}
+
+.footer-links a {
+  margin: 0 10px;
+  text-decoration: none;
+  color: var(--text-color);
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover {
+  color: var(--primary-color);
+}
+
+.social-icons {
+  margin-top: 10px;
+}
+
+.social-icons a {
+  margin: 0 8px;
+  font-size: 20px;
+  color: var(--text-color);
+  transition: color 0.3s;
+}
+
+.social-icons a:hover {
+  color: var(--primary-color);
+}
+
+/* Dark mode footer */
+body.dark-mode footer {
+  background: #1c1c1c;
+  color: #eee;
+}
+body.dark-mode .footer-links a,
+body.dark-mode .social-icons a {
+  color: #eee;
+}
+
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+    @keyframes slideIn {
+      from {transform: translateY(50px); opacity: 0;}
+      to {transform: translateY(0); opacity: 1;}
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+</head>
+<body>
+
+<header>
+  <div class="logo">ZANNEWS</div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="movie.html">Movie</a>
+    <a href="game.html">Game</a>
+    <button class="toggle-darkmode" onclick="toggleDarkMode()">Dark Mode</button>
+  </nav>
+</header>
+
+<section class="content">
+  <h1>Berita Game Terbaru</h1>
+  <div class="news-grid">
+    <a href="https://www.liputan6.com/tekno/read/6008340/update-gta-6-segera-rilis-intip-fitur-baru-yang-bikin-heboh" class="news-card">
+      <img src="https://files.catbox.moe/wmv1vc.jpg" alt="One Piece Live Action">
+      <div class="news-content">
+        <h3>Update GTA 6 Segera Rilis! Intip Fitur Baru yang Bikin Heboh</h3>
+        <p>Grand Theft Auto VI (GTA 6) akan segera rilis dengan sederet fitur baru yang luar biasa, termasuk dua karakter utama, peta yang sangat luas, dan berbagai kejutan lainnya!</p>
+        <p>Klik Untuk Lebih Lengkapnya</p>
+      </div>
+    </a>
+  
+    <a href="https://www.tempo.co/digital/delta-force-garena-masuk-android-dan-ios-apa-isi-season-barunya--1234617" class="news-card">
+      <img src="https://files.catbox.moe/u3x1tt.jpg" alt="Spider-Man 4">
+      <div class="news-content">
+        <h3>Delta Force Garena Masuk Android dan iOS, Apa Isi Season Barunya?</h3>
+        <p>Delta Force versi ponsel dapat terhubung dengan akun Garena Delta Force versi PC melalui fitur cross-progression.</p>
+        <p>Klik Untuk Lebih Lengkapnya</p>
+      </div>
+    </a>
+  
+    <a href="https://tirto.id/download-free-fire-max-garena-rilis-ff-max-akhir-september-2021-gjKn" class="news-card">
+      <img src="https://files.catbox.moe/axhvmb.jpg" alt="Minecraft Movie">
+      <div class="news-content">
+        <h3>Download Free Fire MAX: Garena Rilis FF MAX Akhir September 2021</h3>
+        <p>Tanggal rilis FF MAX telah diumumkan. Free Fire bisa di-download mulai akhir bulan ini. Temukan penjelasannya di sini.</p>
+        <p>Klik Untuk Lebih Lengkapnya</p>
+      </div>
+    </a>
+  </div>
+  
+</section>
+
+<footer>
+    <div class="footer-links">
+      <a href="index.html">Home</a>
+      <a href="movie.html">Movie</a>
+      <a href="game.html">Game</a>
+    </div>
+  
+    <div style="margin-top: 15px;">
+      &copy; 2025 ZANNEWS. All rights reserved.
+    </div>
+  </footer>
+  
+<script>
+  function toggleDarkMode() {
+      const body = document.body;
+      const toggleBtn = document.querySelector('.toggle-darkmode');
+  
+      body.classList.toggle('dark-mode');
+  
+      // Ganti teks tombol berdasarkan mode
+      if (body.classList.contains('dark-mode')) {
+        toggleBtn.textContent = 'Light Mode';
+      } else {
+        toggleBtn.textContent = 'Dark Mode';
+      }
+    }
+</script>
+</body>
+</html>
